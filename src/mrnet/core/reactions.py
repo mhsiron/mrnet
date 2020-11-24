@@ -39,6 +39,8 @@ Atom_Mapping_Dict = Dict[int, int]
 # TODO create OneReactantOneProductReaction, subclassing Reaction, but superclassing
 #  RedoxReaction and IntramolSingleBondChangeReaction
 
+# TODO: allow reactions to not have all the calc data so it can be used as a datastructure upon init
+
 
 class Reaction(MSONable, metaclass=ABCMeta):
     """
@@ -1990,6 +1992,48 @@ class ConcertedReaction(Reaction):
         reaction.rate_calculator = rate_calculator
         return reaction
 
+class SurfaceReaction(Reaction):
+    """
+    placeholder
+    """
+
+    def __init__(
+        self,
+        reactant: MoleculeEntry,
+        product: MoleculeEntry,
+        parameters=None,
+    ):
+        self.reactant = reactant
+        self.product = product
+
+
+        super().__init__(
+            self.reactant,
+            self.product,
+            transition_state=None,
+            parameters=parameters,
+        )
+
+    def energy(self):
+        pass
+
+    def free_energy(self):
+        pass
+
+    def generate(self):
+        pass
+
+    def graph_representation(self):
+        pass
+
+    def rate_constant(self):
+        pass
+
+    def reaction_type(self):
+        pass
+
+
+
 
 def graph_rep_3_2(reaction: Reaction) -> nx.DiGraph:
     """
@@ -3079,3 +3123,4 @@ def unbucket_mol_entries(entries: Dict) -> List[MoleculeEntry]:
     unbucket(entries)
 
     return entries_list
+
